@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load atg_template_tags %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<html>
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="{% static 'css/css.css' %}">
+		<script src="{% static 'js/atg-ajax.js' %}"></script>
+		{% block script_block %}
+		{% endblock %}
+		
+		
+        <title>
+            Around The Grounds -
+            {% block title_block %}
+            {% endblock %}
+        </title>
+    </head>
+
+    <body>
+        <br/><br/><br/><br/><br/>
+        <div class="menu">
+            <ul margin: 0px;>
+                <li><a href="{% url 'index' %}">Home Page</a></li>
+                <li><a href="{% url 'stadiums' %}">Stadiums</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'account' %}">My Account</a></li>
+                    <li><a href="{% url 'logout' %}">Log Out</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Log in</a></li>
+                    <li><a href="{% url 'register' %}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </div>  
+
+        <div class="status">
+                {% if user.is_authenticated %}
+                    <h3>Around The Grounds - Welcome {{ user.username }}</h3>
+                    
+                {% else %}
+                    <h3>Around The Grounds - Log in to write reviews!</h3>
+                {% endif %}
+        </div>
+        
+        <div>
+            {% block body_block %}
+            {% endblock %}
+        </div>
+
+        <hr/>
+
+        <div>
+            <p1>This Page was Created for WAD2 project by:
+                <ul>
+                    <li>Gabriel Georgiev</li>
+                    <li>Jack McKechnie</li>
+                    <li>Aidan Rafferty</li>
+                    <li>Robbie Thomson</li>
+                </ul>
+                Designed to be viewed at 100% zoom.
+            </p1>
+        </div>
+    </body>
+</html>

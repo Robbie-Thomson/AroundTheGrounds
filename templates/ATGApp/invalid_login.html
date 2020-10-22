@@ -1,0 +1,28 @@
+{% extends "ATGApp/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Login
+{% endblock %}
+
+{% block body_block %}
+    <h1>Login to Around the Grounds</h1>
+	
+	<div>
+        <br/>
+		The login details are invalid.
+	</div
+
+    <div>
+        <h2>Enter your Login details below</h2>
+    <form id="login_form" method="post" action="{% url 'login'%}">
+        {% csrf_token %}
+        Username: <input type="text" name="username" value="" size="50"/>
+        <br/><br>
+        Password : <input type="password" name="password" value="" size="50"/>
+        <br/></br>
+        <input type="submit" value="Log in"/>
+        <p>If you dont have and account, please <a href="{% url 'register' %}">Sign Up</a></p>
+    </form>
+    </div>  
+{% endblock %}

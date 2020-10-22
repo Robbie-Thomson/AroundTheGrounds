@@ -1,0 +1,98 @@
+{% extends 'ATGApp/base.html' %}
+{% load staticfiles %}
+
+{% block script_block %}
+<script>
+	$(document).ready(function googleMap() {
+		var mapProp= {
+			center:new google.maps.LatLng({{ stadium.latitude }},{{ stadium.longitude }}),
+			zoom:17,
+		};
+		var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+		var marker = new google.maps.Marker({
+			position: {lat: {{ stadium.latitude }}, lng: {{ stadium.longitude }}},
+			map: map,
+			title: 'Postcode: {{ stadium.postcode }}',
+		});
+	});
+</script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHUm2sdbJm3psdYePJSbmzFT4T80EPKe0&callback=googleMap"></script>
+<script src="{% static 'js/sortTable.js' %}"></script>
+{% endblock %}
+
+{% block title_block %}
+    {{ stadium.name }}
+{% endblock %}
+
+
+{% block body_block %}
+	
+    {% if stadium %}
+	
+        <h1>{{ stadium.name }}</h1><br/>
+		
+		<div class="s">
+		
+		<img class=stadiumImage src="{{ stadium.photo.url }}" alt="Photo of {{ stadium.name }}"> 
+		<div id="googleMap"></div>
+		Home to {{ stadium.homeTeam }}<br/><br/>
+		
+		Capacity - {{ stadium.capacity}}</br><br/>
+		
+		{{ stadium.description }}</br><br/>
+        
+        Average Score -  {{ stadium.averageScore }}
+        
+		<br/><br/>
+		Posted by {{stadium.user}}
+		</br></br><br>
+	
+        {% if user.is_authenticated %}
+            <a class ="reviewButton" href="{% url 'writeReview' stadium.slug %}">Review {{stadium.name}}</a>
+        {% else %}
+            To write a review on {{stadium.name}} log into your account <a href="{% url 'login' %}"> here</a>.
+		</br></br>
+			If you do not have an account with us, register <a href="{% url 'register' %}"> here</a>.
+		
+		{% endif %}
+		</div>
+		
+        {% if reviews %}
+        <div class="t">Click on the corresponding header to sort reviews by atmosphere, food and facilities.</div> 
+        <p>The reviews are sorted so the newest is first by default.</p>
+			</br>
+            <table id="reviews">
+                <tr>
+                    <th>Reviewer</th>
+                    <th onclick = "sortTable(1)">Atmosphere</th>
+                    <th onclick = "sortTable(2)">Food</th>
+                    <th onclick = "sortTable(3)">Facilities</th>
+                    <th>Additional Information</th>
+					<th>Review made on</th>
+                </tr>
+                {% for review in reviews %}
+                    <tr>
+                        <td>{{review.user}}</td>
+                        <td id="atmosphere">{{review.atmosphere}}</td>
+                        <td id="food">{{review.food}}</td>
+                        <td id="facilities">{{review.facilities}}</td>
+                        <td>{% if review.additionalInfo %}
+								{{review.additionalInfo}}
+							{% else %}
+								No additional information.
+							{% endif %}</td>
+						<td>{{review.date}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            
+        {% else %}
+            <strong>No reviews currently for this stadium.</strong>
+        {% endif %}
+
+    {% else %}
+        The specified stadium does not exist!
+    {% endif %}
+
+
+{% endblock %}

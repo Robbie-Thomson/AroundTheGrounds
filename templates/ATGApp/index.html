@@ -1,0 +1,71 @@
+{% extends 'ATGApp/base.html' %}
+{% load staticfiles %}
+
+{% block script_block %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{% static 'js/HighestRatedStadium.js' %}"></script>
+{% endblock %}
+
+{% block title_block %}
+    Home
+{% endblock %}
+
+{% block body_block %}
+	<h1>Home Page</h1>
+
+	<div>
+        <h2>About the site</h2>
+        <p>
+            This site has been created so that avid football supporters and newcomers alike can share their experiences of the football stadiums they have visited.
+            <br/>
+            <br/>Without an account, you will be able to see information about the Stadiums and the reviews people have left about their experiences there.
+            <br/>However if you want to leave your own review on a stadium, you will need to register an account with the site.
+        </p>
+    </div>
+	
+	{% if h %}
+	
+	<button id = "1" class="button">Show Highest Rated Stadium</button>
+		
+		{% for stad in h %}
+			
+			<div id="div1"><h2>
+				
+				<a class="highestRating" href="{% url 'chosenStadium' stad.slug %}" >{{ stad }}</a>
+			
+			</h2></div>
+		
+		{% endfor %}
+    
+		
+	
+	{% endif %}
+    <!-- <div>
+        {% if pages %}
+            <h2>This is the current highests review of a stadium</h2>
+            <table style="width:100%">
+                <tr>
+                    <th>{{ review.stadiumName }}</th> 
+                </tr>
+                <tr>
+                    <td>
+                        Capacity:{{ stadium.capacity }}<br/>
+                        Postcode:{{ stadium.postcode }}<br/>
+                        Atmosphere: {{atmosphere}}/5<br/>
+                        Food: {{food}}/5<br/>
+                        Facilities: {{facilities}}/5<br/>
+                        {% if pages %}
+                            Extra Comments: {{comments}}
+                        {% else %}
+                            No extra comments were added to the review.
+                        {% endif %}
+                    </td>
+                    <td><img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /></td> 
+                </tr>
+            </table>
+            
+        {% else %}
+            <h2>! A review has yet to be made on a stadium !</h2>
+        {% endif %}
+    </div> -->
+{% endblock %}

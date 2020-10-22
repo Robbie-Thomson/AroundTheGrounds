@@ -1,0 +1,28 @@
+{% extends "ATGApp/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block body_block %}
+    <h1>Register for Around the Grounds</h1>
+
+    {% if registered %}
+        <h2>Thank you for registering!</h2>
+        <a class ="reviewButton" href="{% url 'login' %}">Now Log In with registered details.</a>
+   
+    {% else %}
+        <h2>Register for an account here!</h2>
+        
+        <form id="user_form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+
+            <input type="submit" name="submit" value="Register">
+        </form>
+    {% endif %}
+
+{% endblock %}

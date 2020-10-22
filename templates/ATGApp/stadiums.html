@@ -1,0 +1,53 @@
+{% extends 'ATGApp/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Stadiums
+{% endblock %}
+
+{% block body_block %}
+    <h1>Stadiums</h1>
+        
+        <!-- <div>
+            {% if user.is_authenticated %}
+
+                <p><a class="reviewButton"href="{% url 'add_stadium' %}">Add New Stadium!</a></p>
+            {% else %}
+                <p>To add a new stadium you need to <a href="{% url 'login' %}">Log In</a> to your account, or register a <a href="{% url 'register' %}">New Account</a></p>
+            {% endif %}
+        </div> -->
+        <div>       
+            {% if stadiums %}
+                <h2>These are the Stadiums we have for you to review</h2>
+                
+                {% if user.is_authenticated %}
+
+                    <p><a class="reviewButton"href="{% url 'add_stadium' %}">Add New Stadium!</a></p>
+                {% else %}
+                    <p>To add a new stadium you need to <a href="{% url 'login' %}">Log In</a> to your account, or register a <a href="{% url 'register' %}">New Account</a></p>
+                {% endif %}
+               
+                {% for stadium in stadiums %}
+
+                    <div class = "responsive">
+                        <div class = "gallery">
+                            <a class = "stadiumButton" href="{% url 'chosenStadium' stadium.slug %}">
+                            <img src="{{ stadium.photo.url }}" alt="{{ stadium.name }}" width = "600" height="550">
+                            <div class = "stadName">{{ stadium.name }}</div>
+                            <br>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="clearBox"></div>
+            {% else %}
+                <h2>There are currently no stadiums available to review</h2>
+                {% if user.is_authenticated %}
+
+                <p><a class="reviewButton"href="{% url 'add_stadium' %}">Add New Stadium!</a></p>
+                {% else %}
+                    <p>To add a new stadium you need to <a href="{% url 'login' %}">Log In</a> to your account, or register a <a href="{% url 'register' %}">New Account</a></p>
+                {% endif %}		
+            {% endif %}
+        </div>
+{% endblock %}

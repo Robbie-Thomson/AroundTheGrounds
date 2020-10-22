@@ -1,0 +1,77 @@
+{% extends 'ATGApp/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    My Account
+{% endblock %}
+
+{% block body_block %}
+	<h1>My Account</h1>
+		
+	{% if user.is_authenticated %}
+		<div class="t">
+
+			<div>
+				<div class="s">
+						{% if user_profile.picture %}
+							<img class ="stadiumImage" src="{{ user_profile.picture.url }}">
+						{% else %}
+							<h2 class="noProfilePicMessage">You don't have a selected profile picture.</h2>
+						{% endif %}
+						<h2>Hi, {{ user.username }}<br/><br/>Email: {{ user_profile.user.email }}</h2>
+				</div>
+			</div>
+
+
+			{% if stadiums %}
+				<h2>The stadiums you have added are as follows:</h2>
+				<ul>
+					{% for stadium in stadiums %}
+					<li>{{stadium.name}}</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<h2>You haven't added any stadiums.</h2>
+			{% endif %}
+
+
+			{% if reviews %}
+			<h2>These are the reviews you have made:</h2>
+				<table id="userReviews">
+						<tr>
+							<th>Stadium</th>
+							<th>Atmosphere</th>
+							<th>Food</th>
+							<th>Facilities</th>
+							<th>Review made on</th>
+							<th>Additional Information</th>
+
+						</tr>
+					{% for review in reviews %}
+						</tr>
+							<td>{{review.stadium}}</td>
+							<td>{{review.atmosphere}} / 5 </td>
+							<td>{{review.food}} / 5 </td>
+							<td>{{review.facilities}} / 5 </td>
+							<td>{{review.date}}</td>
+							{% if review.additionalInfo %}
+								<td>{{review.additionalInfo}}</td>
+							{% else %}
+								<td>No extra comments were added to the review.</td>
+							{% endif %}	
+							</tr>
+					{% endfor %}
+				</table>
+			{% else %}
+				<h2>You haven't written any reviews.</h2>
+			{% endif %}
+		</div>
+		
+		<div>
+		<a href="{% url 'del_acc' %}" class="reviewButton">Delete Account</a>
+		</div>
+	{% else %}
+        <div>You Do not have an Account!!!</div>
+	{% endif %}
+    
+{% endblock %}

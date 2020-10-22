@@ -37,7 +37,7 @@ MEDIA_ROOT = MEDIA_DIR
 STATICFILES_DIRS = [STATIC_DIR, ]
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'j9(r96q()yk1^5p+x!cyp7e(rx_tigg7j3kqhr!djf49cs7nq3'
+SECRET_KEY = '***'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
